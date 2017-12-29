@@ -45,6 +45,9 @@ angular.module('todomvc')
 				})
 				.finally(function () {
 					$scope.saving = false;
+
+					// go to the react application
+					window.history.pushState({}, 'react', '/react')
 				});
 		};
 
