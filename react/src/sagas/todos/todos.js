@@ -1,13 +1,10 @@
 import { call, put, select } from 'redux-saga/effects'
 import store from 'redux/data/todos'
-import newTodo from 'redux/ui/newTodo'
 import completed from 'redux/ui/completed'
 import editing from 'redux/ui/editing'
 
-export function* add(todo) {
-  if (!todo || !todo.trim()) return
-  yield put(store.add(todo))
-  yield put(newTodo.reset())
+export function goToAngular() {
+  window.location = '/angularjs'
 }
 
 export function* remove(todoId) {

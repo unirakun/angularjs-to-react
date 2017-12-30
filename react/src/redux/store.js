@@ -7,8 +7,12 @@ import reducers from './reducers'
 
 const sagaMiddleware = createSagaMiddleware()
 
+const time = Date.now()
+const initState = JSON.parse(window.localStorage.getItem('redux-store') || {})
+
 const store = createStore(
   reducers,
+  initState,
   compose(
     enhancer,
     applyMiddleware(sagaMiddleware, middleware),
@@ -16,6 +20,8 @@ const store = createStore(
     window.devToolsExtension ? window.devToolsExtension() : f => f,
   ),
 )
+
+console.log('Temps init store', `${Date.now() - time} ms`)
 
 sagaMiddleware.run(sagas(store))
 
