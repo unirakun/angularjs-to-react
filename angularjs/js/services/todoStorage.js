@@ -13,7 +13,7 @@ angular.module('todomvc')
 
 		// Detect if an API backend is present. If so, return the API module, else
 		// hand off the localStorage adapter
-		return $injector.get('localStorage');
+		return Promise.resolve($injector.get('localStorage'));
 	})
 
 	.factory('localStorage', function ($q) {
