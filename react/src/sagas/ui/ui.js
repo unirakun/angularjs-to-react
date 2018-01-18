@@ -1,21 +1,19 @@
 import { put, select } from 'redux-saga/effects'
-import newTodo from 'redux/ui/newTodo'
-import editing from 'redux/ui/editing'
-import todos from 'redux/data/todos'
+import store from 'redux/store'
 
 export function* setNewTodo(todo) {
-  yield put(newTodo.set(todo))
+  yield put(store.ui.newTodo.set(todo))
 }
 
 export function* edit(todoId) {
-  const todo = yield select(todos.get(todoId))
-  yield put(editing.add(todo))
+  const todo = yield select(store.data.todos.get(todoId))
+  yield put(store.ui.editing.add(todo))
 }
 
 export function* cancelEdit(todoId) {
-  yield put(editing.remove(todoId))
+  yield put(store.ui.editing.remove(todoId))
 }
 
 export function* setEditTodo(todo) {
-  yield put(editing.update(todo))
+  yield put(store.ui.editing.update(todo))
 }

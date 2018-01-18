@@ -1,27 +1,32 @@
-import { createStore, compose, applyMiddleware } from 'redux'
+import { createState } from 'k-simple-state'
+import { compose, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { initializeCurrentLocation } from 'redux-little-router'
 import sagas from '../sagas'
-import { enhancer, middleware } from './ui/router'
-import reducers from './reducers'
+import { enhancer, middleware, reducer as router } from './ui/router'
 
 const sagaMiddleware = createSagaMiddleware()
 
-const time = Date.now()
-const initState = JSON.parse(window.localStorage.getItem('redux-store') || {})
-
-const store = createStore(
-  reducers,
-  initState,
-  compose(
+const store = createState({
+  data: {
+    todos: { type: 'keyValue', key: 'id' }, /* todo: middleware */
+  },
+  router,
+  ui: {
+    completed: { type: 'keyValue', key: 'id' },
+    editing: { type: 'keyValue', key: 'id' },
+    newTodo: { type: 'simpleObject', defaultData: '' },
+  },
+}, {
+  hideRedux: false,
+  init: JSON.parse(window.localStorage.getItem('redux-store') || '{}'),
+  middlewares: compose(
     enhancer,
     applyMiddleware(sagaMiddleware, middleware),
     /* eslint-env browser */
     window.devToolsExtension ? window.devToolsExtension() : f => f,
   ),
-)
-
-console.log('Temps init store', `${Date.now() - time} ms`)
+})
 
 sagaMiddleware.run(sagas(store))
 

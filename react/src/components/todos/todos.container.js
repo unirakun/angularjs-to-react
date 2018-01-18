@@ -1,8 +1,12 @@
 import { connect } from 'react-redux'
-import todos from 'redux/data/todos'
-import completed from 'redux/ui/completed'
+import store from 'redux/store'
 import action from 'components/actionFactory'
 import Component from './todos'
+
+const {
+  data: { todos },
+  ui: { completed },
+} = store
 
 export const mapStateToProps = (state) => {
   return {

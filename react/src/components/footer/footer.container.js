@@ -1,10 +1,14 @@
 import { connect } from 'react-redux'
 import { push } from 'redux-little-router'
-import todos from 'redux/data/todos'
+import store from 'redux/store'
 import action from 'components/actionFactory'
 import { getTitle } from 'redux/ui/router'
-import completed from 'redux/ui/completed'
 import Component from './footer'
+
+const {
+  ui: { completed },
+  data: { todos },
+} = store
 
 export const mapStateToProps = (state) => {
   const todosCompleted = completed.getBy('completed', true)(state).length

@@ -1,7 +1,11 @@
 import { connect } from 'react-redux'
-import newTodo from 'redux/ui/newTodo'
+import store from 'redux/store'
 import action from 'components/actionFactory'
 import Component from './header'
+
+const {
+  ui: { newTodo },
+} = store
 
 export const mapStateToProps = (state) => {
   return {

@@ -41,62 +41,11 @@ angular.module('todomvc')
 			$scope.saving = true;
 			store.insert(newTodo)
 				.then(function success() {
+					window.store.data.todos.add(Object.assign({}, newTodo, { id: Date.now() }))
 					$scope.newTodo = '';
 				})
 				.finally(function () {
 					$scope.saving = false;
-
-					// go to the react application
-					// - save to localStorage
-					const time = Date.now()
-					const angularData = JSON.parse(window.localStorage.getItem('todos-angularjs'))
-
-					const array = []
-					const keys = []
-					const data = {}
-
-					const completedArray = []
-					const completedKeys = []
-					const completedData = {}
-
-					angularData.forEach((todo, index) => {
-						const id = index
-
-						// todo
-						const mappedTodo = { id, todo: todo.title }
-						keys.push(id)
-						array.push(mappedTodo)
-						data[id] = mappedTodo
-
-						// completed
-						if (todo.completed) {
-							const completed = { id, completed: true }
-
-							completedArray.push(completed)
-							completedKeys.push(id)
-							completedData[id] = completed
-						}
-					})
-
-					const initState = {
-						data: {
-							todos: {
-								keys,
-								data,
-								array,
-							},
-						},
-						ui: {
-							completed: {
-								keys: completedKeys,
-								data: completedData,
-								array: completedArray,
-							},
-						},
-					}
-
-					window.localStorage.setItem('redux-store', JSON.stringify(initState))
-					console.log('Temps de creation du store redux pour react', `${Date.now() - time} ms`)
 
 					// - go to react
 					window.history.pushState({}, 'react', '/react')

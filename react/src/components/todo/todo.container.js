@@ -1,10 +1,13 @@
 import { connect } from 'react-redux'
-import todos from 'redux/data/todos'
-import completed from 'redux/ui/completed'
-import editing from 'redux/ui/editing'
+import store from 'redux/store'
 import action from 'components/actionFactory'
 import { getTitle } from 'redux/ui/router'
 import Component from './todo'
+
+const {
+  ui: { editing, completed },
+  data: { todos },
+} = store
 
 export const mapStateToProps = (state, { id }) => {
   const edit = editing.get(id)(state)
